@@ -1,6 +1,6 @@
 <?php
 
-namespace Agentis\Tools;
+namespace QueryPilot\Tools;
 
 use Illuminate\Contracts\JsonSchema\JsonSchema;
 use Illuminate\Support\Facades\Cache;

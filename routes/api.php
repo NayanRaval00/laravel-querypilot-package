@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use Agentis\AgentisAgent;
+use QueryPilot\QueryPilotAgent;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -10,14 +10,14 @@ Route::get('/user', function (Request $request) {
 
 
 //Find a user which email is "heidenreich.olen@example.org" and also show there product and profile data
-Route::get('/agentis-test', function () {
+Route::get('/querypilot-test', function () {
     try {
         $start  = microtime(true);
-        $agent  = app(AgentisAgent::class);
+        $agent  = app(QueryPilotAgent::class);
 
         $response = $agent->prompt(
             request('q',  'Give me first record of user table'),
-            provider: config('agentis.provider')
+            provider: config('querypilot.provider')
         );
 
         return response()->json([
@@ -28,7 +28,7 @@ Route::get('/agentis-test', function () {
             'rows'          => $response['rows'] ?? [],
             'total_time_ms' => round((microtime(true) - $start) * 1000),
         ]);
-    } catch (\Exception $e) {
+    } catch (Exception $e) {
         return response()->json([
             'success' => false,
             'error'   => $e->getMessage(),

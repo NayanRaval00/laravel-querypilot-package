@@ -1,0 +1,45 @@
+{
+    "name": "nayanraval/query-pilot",
+    "description": "AI-powered natural language search for Laravel applications — connect your database and let AI handle the queries",
+    "type": "library",
+    "version": "1.0.0",
+    "license": "MIT",
+    "keywords": [
+        "laravel",
+        "ai",
+        "search",
+        "database",
+        "natural-language",
+        "eloquent",
+        "query",
+        "gemini",
+        "openai"
+    ],
+    "authors": [
+        {
+            "name": "Nayan Raval",
+            "email": "ravalnayan029@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "QueryPilot\\": "src/"
+        }
+    },
+    "require": {
+        "php": "^8.1",
+        "laravel/ai": "^0.6"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "QueryPilot\\Providers\\QueryPilotServiceProvider"
+            ],
+            "aliases": {
+                "QueryPilot": "QueryPilot\\Facades\\QueryPilot"
+            }
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

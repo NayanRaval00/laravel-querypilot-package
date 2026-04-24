@@ -1,7 +1,7 @@
 <?php
 
-use Agentis\AgentisAgent;
-use Agentis\Tools\QueryDatabaseTool;
+use QueryPilot\QueryPilotAgent;
+use QueryPilot\Tools\QueryDatabaseTool;
 use Laravel\Ai\Responses\StructuredAgentResponse;
 
 uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);
@@ -35,7 +35,7 @@ test('agentis config is loaded', function () {
 });
 
 test('agent is resolved from container', function () {
-    expect(app(AgentisAgent::class))->toBeInstanceOf(AgentisAgent::class);
+    expect(app(QueryPilotAgent::class))->toBeInstanceOf(QueryPilotAgent::class);
 });
 
 // ─────────────────────────────────────────
@@ -43,7 +43,7 @@ test('agent is resolved from container', function () {
 // ─────────────────────────────────────────
 
 test('agent instructions contain required keywords', function () {
-    $instructions = (string) app(AgentisAgent::class)->instructions();
+    $instructions = (string) app(QueryPilotAgent::class)->instructions();
 
     expect($instructions)
         ->toContain('database assistant')
@@ -51,7 +51,7 @@ test('agent instructions contain required keywords', function () {
 });
 
 test('agent has query database tool attached', function () {
-    $tools = iterator_to_array(app(AgentisAgent::class)->tools());
+    $tools = iterator_to_array(app(QueryPilotAgent::class)->tools());
 
     expect($tools)->toHaveCount(1);
     expect($tools[0])->toBeInstanceOf(QueryDatabaseTool::class);
@@ -206,7 +206,7 @@ test('api endpoint returns 200 with mocked agent', function () {
     $fakeResponse->shouldReceive('offsetExists')->andReturn(true);
 
     // Mock the agent to return the fake response
-    $this->mock(AgentisAgent::class, function ($mock) use ($fakeResponse) {
+    $this->mock(QueryPilotAgent::class, function ($mock) use ($fakeResponse) {
         $mock->shouldReceive('prompt')
             ->once()
             ->andReturn($fakeResponse);
@@ -237,7 +237,7 @@ test('api endpoint returns correct data structure', function () {
     $fakeResponse->shouldReceive('offsetExists')->andReturn(true);
 
     $this->mock(
-        AgentisAgent::class,
+        QueryPilotAgent::class,
         fn($mock) => $mock
             ->shouldReceive('prompt')
             ->once()

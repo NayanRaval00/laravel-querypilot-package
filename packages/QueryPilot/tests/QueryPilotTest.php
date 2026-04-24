@@ -1,13 +1,13 @@
 <?php
 
-use Agentis\AgentisAgent;
-use Agentis\Tools\QueryDatabaseTool;
+use QueryPilot\QueryPilotAgent;
+use QueryPilot\Tools\QueryDatabaseTool;
 use Laravel\Ai\Testing\AgentFake;
 
 beforeEach(function () {
     // Use Laravel AI's built-in fake so we don't hit real Gemini API in tests
     AgentFake::fake([
-        AgentisAgent::class => [
+        QueryPilotAgent::class => [
             'structured' => [
                 'answer'      => 'There are 3 users in the database.',
                 'sql'         => 'SELECT COUNT(*) as count FROM users',
@@ -19,12 +19,12 @@ beforeEach(function () {
 });
 
 test('agent is bound in container', function () {
-    $agent = app(AgentisAgent::class);
-    expect($agent)->toBeInstanceOf(AgentisAgent::class);
+    $agent = app(QueryPilotAgent::class);
+    expect($agent)->toBeInstanceOf(QueryPilotAgent::class);
 });
 
 test('agent has correct instructions', function () {
-    $agent        = app(AgentisAgent::class);
+    $agent        = app(QueryPilotAgent::class);
     $instructions = $agent->instructions();
 
     expect((string) $instructions)
@@ -33,7 +33,7 @@ test('agent has correct instructions', function () {
 });
 
 test('agent has query database tool', function () {
-    $agent = app(AgentisAgent::class);
+    $agent = app(QueryPilotAgent::class);
     $tools = iterator_to_array($agent->tools());
 
     expect($tools)->toHaveCount(1);
@@ -84,7 +84,7 @@ test('query database tool executes valid select', function () {
 });
 
 test('agent returns structured response', function () {
-    $agent    = app(AgentisAgent::class);
+    $agent    = app(QueryPilotAgent::class);
     $response = $agent->prompt('How many users?', provider: 'gemini');
     $result   = $response->structured();
 

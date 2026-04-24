@@ -2,7 +2,7 @@
     "repositories": [
         {
             "type": "path",
-            "url": "./packages/agentis"
+            "url": "./packages/QueryPilot"
         }
     ],
     "$schema": "https://getcomposer.org/schema.json",
@@ -20,7 +20,7 @@
         "laravel/framework": "^13.0",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^3.0",
-        "yourvendor/agentis": "*"
+        "nayanraval/query-pilot": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",

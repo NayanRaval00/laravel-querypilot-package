@@ -1,8 +1,8 @@
 <?php
 
-namespace Agentis;
+namespace QueryPilot;
 
-use Agentis\Tools\QueryDatabaseTool;
+use QueryPilot\Tools\QueryDatabaseTool;
 use Illuminate\Contracts\JsonSchema\JsonSchema;
 use Laravel\Ai\Contracts\Agent;
 use Laravel\Ai\Contracts\HasStructuredOutput;
@@ -10,15 +10,15 @@ use Laravel\Ai\Contracts\HasTools;
 use Laravel\Ai\Promptable;
 use Stringable;
 
-class AgentisAgent implements Agent, HasTools, HasStructuredOutput
+class QueryPilotAgent implements Agent, HasTools, HasStructuredOutput
 {
     use Promptable;
 
     public function instructions(): Stringable|string
     {
-        $tables        = config('agentis.tables', []);
-        $relationships = config('agentis.relationships', []);
-        $maxRows       = config('agentis.max_rows', 100);
+        $tables        = config('querypilot.tables', []);
+        $relationships = config('querypilot.relationships', []);
+        $maxRows       = config('querypilot.max_rows', 100);
         $schemaLines   = [];
 
         foreach ($tables as $table => $def) {
@@ -74,9 +74,9 @@ class AgentisAgent implements Agent, HasTools, HasStructuredOutput
     {
         return [
             new QueryDatabaseTool(
-                tables: config('agentis.tables', []),
-                maxRows: config('agentis.max_rows', 100),
-                cacheTtl: config('agentis.cache_ttl', 0),
+                tables: config('querypilot.tables', []),
+                maxRows: config('querypilot.max_rows', 100),
+                cacheTtl: config('querypilot.cache_ttl', 0),
             ),
         ];
     }
